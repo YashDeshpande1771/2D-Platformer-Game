@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class PlayerPlatformerController : PhysicsObject
 {
-    public float jumpTakeOffSpeed = 10;
-    public float maxSpeed = 7;
-    // Start is called before the first frame update
-    void Start()
-    {
 
+    public float maxSpeed = 7;
+    public float jumpTakeOffSpeed = 4;
+
+    private SpriteRenderer spriteRenderer;
+    private Animator animator;
+
+    // Use this for initialization
+    void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        animator = GetComponent<Animator>();
     }
 
-    // Update is called once per frame
     protected override void ComputeVelocity()
     {
         Vector2 move = Vector2.zero;
@@ -29,11 +34,22 @@ public class PlayerPlatformerController : PhysicsObject
             {
                 velocity.y = velocity.y * 0.5f;
             }
-            else
-            {
-                velocity.y = jumpTakeOffSpeed;
-            }
         }
+        else if (Input.GetKeyDown(KeyCode.D))
+        {
+            velocity.y = jumpTakeOffSpeed;
+            velocity.x = maxSpeed;
+        }
+
+        bool flipSprite = (spriteRenderer.flipX ? (move.x > 0.01f) : (move.x < 0.01f));
+        if (flipSprite)
+        {
+            spriteRenderer.flipX = !spriteRenderer.flipX;
+
+        }
+        animator.SetBool("grounded", grounded);
+        animator.SetFloat("velocityX", Mathf.Abs(velocity.x) / maxSpeed);
+
         targetVelocity = move * maxSpeed;
     }
 }
