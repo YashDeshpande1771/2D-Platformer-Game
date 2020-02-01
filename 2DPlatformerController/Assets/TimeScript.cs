@@ -5,26 +5,22 @@ using UnityEngine.UI;
 
 public class TimeScript : MonoBehaviour
 {
-    public float timeStart;
-    public Text textBox;
-    public static int numberOfCollectables;
-   
-   
-    void Start()
+    private float TimeStart = 0;
+    private Text textBox = null;
+    private const int numberOfCollectables = 4;
+
+     void Start()
     {
-        textBox = GetComponent<Text>();
-        timeStart = Time.time;       
-        numberOfCollectables = 4;
+        textBox = GetComponent<Text> ();
+        TimeStart = Time.time;       
     }
 
-    // Update is called once per frame
     void Update()
     {
-        
-        textBox.text = "Time: " + Mathf.Round( Time.time - timeStart).ToString();
-        if(PlayerScore.collectableCount == numberOfCollectables)
+        textBox.text = "Time: " + Mathf.Round(Time.time - TimeStart).ToString();
+        if(PlayerScore.collectibleCount == numberOfCollectables)
         {
-            textBox.text = "Finished in " + Mathf.Round(Time.time - timeStart).ToString() + " seconds";
+            textBox.text = "Finished in " + Mathf.Round(Time.time - TimeStart).ToString() + " seconds";
             Time.timeScale = 0;
         }
     }

@@ -4,15 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 public class ScoreScript : MonoBehaviour
 {
-    public static int scoreValue;
-    Text score;
-    // Start is called before the first frame update
+    public static int scoreValue = 0;
+    private Text score = null;
+
     void Start()
     {
-        score = GetComponent<Text>();
-}
+        score = GetComponent<Text> ();
+    }
 
-    // Update is called once per frame
     void Update()
     {
         score.text = "Score " + scoreValue;
